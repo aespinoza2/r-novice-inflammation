@@ -5,6 +5,8 @@ date: "2022-12-06"
 output: word_document
 ---
 
+## Link to forked GitHub repo: https://github.com/aespinoza2/r-novice-inflammation
+
 ## Step 8. Manipulating our data. 
 
 ```{r warning=FALSE}
