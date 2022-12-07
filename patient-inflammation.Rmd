@@ -104,6 +104,7 @@ avg_day_inflammation <- apply(data01, 2, mean)
 ```{r}
 plot(avg_day_inflammation)
 ```
+
 ### Question6. What does this plot look like?  Why do you think it looks this way? 
 
 ```{r}
@@ -119,6 +120,7 @@ This plot is much more symmetric due to the range being the max day inflammation
 min_day_inflammation <- apply(data01, 2, min)
 plot(min_day_inflammation)
 ```
+
 This plot seems to be nonlinear on both sides. This does not look correct at first glance, but the data might show how the minimum day inflammation remains constant for several days before increasing or decreasing depending on the stage of recovery.
 
 
