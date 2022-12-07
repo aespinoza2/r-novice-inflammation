@@ -1,0 +1,122 @@
+---
+title: "Patient Information"
+author: "Agustin Espinoza"
+date: "2022-12-06"
+output: word_document
+---
+
+## Step 8. Manipulating our data. 
+
+```{r warning=FALSE}
+#package(readr)
+library(readr)
+data01 <- read.csv("data/data/inflammation-01.csv", header = FALSE, sep = ',')
+```
+
+## 8A. Now that our data are loaded into R, we can start doing things with them. 
+### Question: What is the output of this command? What is this type of data class
+
+```{r}
+class(data01)
+```
+The output of this command is "data.frame". This class is a data structure similar to a table consisting of columns and rows.
+
+## 8B. Now let's find out the shape, or dimensions, of data01 with the function dim:
+### Question 1: What is the output of this command? What does it mean?
+
+```{r}
+dim(data01)
+```
+The output of this command is "[1] 60   40". This means that the data frame consists of 60 rows/observations and 40 columns/variables.
+
+## 8C. Let's extract particular columns and rows from our dataset using base R.
+
+```{r}
+data01[30,20]
+data01[c(1,3,5),c(10,20)]
+```
+
+### Question 2: How do we select the first ten columns of values for the first four rows?  How do we select the first ten columns of rows 5 to 10?
+
+```{r}
+# First ten columns of values for first ten rows
+data01[1:4,1:10]
+# First ten columns of rows 5 to 10
+data01[5:10,1:10]
+```
+## 8D. Addressing Columns by Name
+
+### Question3: What is the output of this command? What is the value if you change max to sum?
+
+```{r}
+# first row, all of the columns
+patient_1 <- data01[1, ]
+# max inflammation for patient 1
+max(patient_1)
+```
+The output of this command is 18. If we change the max to sum, the output changes to 218 because it is a sum of all the values in row 1 of data01.
+
+```{r}
+sum(patient_1)
+```
+## 8E. Performing statistics on the data
+
+```{r}
+# max inflammation for patient 1 
+max(data01[1, ])
+```
+
+### Question 4: What command will allow you to find the minimum inflammation for patient 2 on day 7.  Type this into your R script.  What is the value?
+
+```{r}
+min(data01[2, 7])
+```
+The value for the minimum inflammation for patient 2 on day 7 is 3.
+
+## 8F. Forcing R to read data as numeric
+
+```{r}
+max(data01[1, ])
+
+# R may return an error when you attempt to perform similar calculations on subsetted rows of data frames. This is because some functions in R automatically convert the object type to a 	numeric vector, while others do not.
+mean(data01 [1, ])
+```
+
+### Question5: What value is returned by this command?
+
+```{r}
+mean(as.numeric(data01[1, ]))
+```
+## 8G. Operations across margins of the dataframe
+
+```{r}
+# SYNTAX: apply(X, MARGIN, FUN, ..., simplify = TRUE)
+# Thus, to obtain the average inflammation of each patient we will need to calculate the mean of all of the rows (MARGIN = 1) of the data frame.
+avg_patient_inflammation <- apply
+# And to obtain the average inflammation of each day we will need to calculate the mean of all of the columns (MARGIN = 2) of the data frame.
+avg_day_inflammation <- apply(data01, 2, mean)
+```
+
+## Step 9. Plotting the data
+
+```{r}
+plot(avg_day_inflammation)
+```
+### Question6. What does this plot look like?  Why do you think it looks this way? 
+
+```{r}
+max_day_inflammation <- apply(data01, 2, max)
+plot(max_day_inflammation)
+```
+
+This plot is much more symmetric due to the range being the max day inflammation rather than the average day inflammation from the previous plot. This clearly shows the peak reached at 20 days and the descending right side of the plot illustrates the reduction in max inflammation.
+
+### Question7. What happens when you plot the min day inflammation?  Do you think this result is correct?  Why or why not? 
+
+```{r}
+min_day_inflammation <- apply(data01, 2, min)
+plot(min_day_inflammation)
+```
+This plot seems to be nonlinear on both sides. This does not look correct at first glance, but the data might show how the minimum day inflammation remains constant for several days before increasing or decreasing depending on the stage of recovery.
+
+
